@@ -30,7 +30,7 @@ function load_map(file_path)
 end
 
 function love.load()
-  tile_size=32
+  tile_size=32*2
 	local player=love.graphics.newImage("assets/P.bmp")
   local space=love.graphics.newImage("assets/-.bmp")
   local wall=love.graphics.newImage("assets/W.bmp")
@@ -45,12 +45,23 @@ function next_map()
   load_map("assets/map"..map[map_current]..".txt")
 end
 
+-- draw image scaled and fitting rectangle
+function image_draw(image,xywh)
+  -- scale factors
+  local sx=xywh[3]/image:getWidth()
+  local sy=xywh[4]/image:getHeight()
+  -- provide image, position, scale
+  love.graphics.draw(image, xywh[1],xywh[2],0, sx,sy)
+end
+
 function love.draw()
   for y=1,#grid do
     for x=1,#grid[1] do
       local tile_type=grid[y][x]
       if x==px and y==py then tile_type="P" end
-      love.graphics.draw(tile[tile_type],(x-1)*tile_size,(y-1)*tile_size)
+      --love.graphics.draw(tile[tile_type],(x-1)*tile_size,(y-1)*tile_size)
+      local dx,dy=(x-1)*tile_size,(y-1)*tile_size
+      image_draw(tile[tile_type],{dx,dy,tile_size,tile_size})
     end
   end
 end
