@@ -41,7 +41,11 @@ function love.load()
   next_map()
 end
 function next_map()
-  map_current=1+map_current
+  map_current=map_current+1
+  if map_current > #map then
+    map_current=1 -- loop back to the first level
+    love.window.showMessageBox("You win!", "You completed all the levels! Restarting from level 1.")
+  end
   load_map("assets/map"..map[map_current]..".txt")
 end
 
