@@ -70,23 +70,39 @@ function love.draw()
   end
 end
 
+function try_move(tx,ty)
+  if grid[ty]~=nil and grid[ty][tx]~=nil then
+    if
+    (math.abs(tx-px)==1 and ty==py)
+    or (math.abs(ty-py)==1 and tx==px)
+    then
+      local going=grid[ty][tx]
+      if going~="#" then
+        px,py=tx,ty
+        if going=="E" then next_map() end
+      end
+    end
+  end
+end
+
 function love.update()
   if love.mouse.isDown(1) then
     local mx,my=love.mouse.getPosition()
     local tx,ty=math.floor(mx/tile_size)+1,math.floor(my/tile_size)+1
-    
-    if grid[ty]~=nil and grid[ty][tx]~=nil then
-      if
-      (math.abs(tx-px)==1 and ty==py)
-      or (math.abs(ty-py)==1 and tx==px)
-      then
-        local going=grid[ty][tx]
-        if going~="#" then
-          px,py=tx,ty
-          if going=="E" then next_map() end
-        end
-      end
-    end
-  
+    try_move(tx,ty)
+  end
+end
+
+function love.keypressed(key)
+  if key=="escape" then
+    love.event.quit()
+  elseif key=="left" then
+    try_move(px-1,py)
+  elseif key=="right" then
+    try_move(px+1,py)
+  elseif key=="up" then
+    try_move(px,py-1)
+  elseif key=="down" then
+    try_move(px,py+1)
   end
 end
