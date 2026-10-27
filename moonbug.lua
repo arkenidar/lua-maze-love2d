@@ -4174,6 +4174,8 @@ end
 ---@param host? string
 ---@param port? integer
 ---@param opts? moonbug.Config
+---@return boolean? ok
+---@return string?  error
 function M.listen(host, port, opts)
     -- save the initial session config for later
     if not started_once then
@@ -4199,17 +4201,25 @@ function M.listen(host, port, opts)
 
     session.config = opts or {}
 
-    install_wrappers()
-
     local server, err = bind(host, port)
     if err ~= nil then
-        log.fatal("could not create server: %s", err)
-        return
+        local h = host or "127.0.0.1"
+        local p = port or tonumber(os.getenv "MOONBUG_PORT") or default_port
+
+        log.error("could not create debug server on '%s:%d': %s", h, p, err)
+
+        if tostring(err):lower():find("already in use", 1, true) then
+            log.error("port %d is already in use - is another instance of the game or a debugger still running?", p)
+        end
+
+        return false, err
     end
 
     assert(server)
 
     session.server = server
+
+    install_wrappers()
 
     if session.config.wait == true then
         local deadline = session.config.max_wait_time and (socket().gettime() + session.config.max_wait_time)
