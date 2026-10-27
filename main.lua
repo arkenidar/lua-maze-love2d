@@ -1,12 +1,16 @@
 
--- debugging support (/pkulchenko/MobDebug setup, works also in ZeroBrane Studio)
-
--- https://github.com/pkulchenko/MobDebug/blob/master/examples/start.lua
--- https://raw.githubusercontent.com/pkulchenko/MobDebug/master/src/mobdebug.lua
+-- debugging support
+-- moonbug: single-file, in-process, DAP-powered Lua debugger
+--   https://github.com/atomicptr/moonbug
+-- MobDebug: Lua remote debugger (works with ZeroBrane Studio etc.)
+--   https://github.com/pkulchenko/MobDebug
 
 -- don't activate debugging if not specified this way
-if arg[#arg]=="-debug" then
-  -- activate debugging
+if arg[#arg]=="-moonbug" then
+  -- start the moonbug DAP server and wait for a debugger (e.g. VS Code) to attach
+  require("moonbug").listen(nil, nil, { wait = true })
+elseif arg[#arg]=="-debug" then
+  -- activate MobDebug (ZeroBrane Studio etc.)
   require("mobdebug").start()
 end
 ------------------------------------------------------------

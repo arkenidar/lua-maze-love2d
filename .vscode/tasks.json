@@ -1,0 +1,47 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "love: run",
+      "type": "shell",
+      "command": "love",
+      "args": [
+        "."
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "love: run (Moonbug)",
+      "type": "shell",
+      "command": "love",
+      "args": [
+        ".",
+        "-moonbug"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "love: run (MobDebug)",
+      "type": "shell",
+      "command": "love",
+      "args": [
+        ".",
+        "-debug"
+      ],
+      "options": {
+        "cwd": "${workspaceFolder}"
+      },
+      "problemMatcher": []
+    }
+  ]
+}

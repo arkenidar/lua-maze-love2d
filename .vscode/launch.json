@@ -1,0 +1,26 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "moonbug: Launch LÖVE",
+      "type": "moonbug",
+      "request": "launch",
+      "lua": "love",
+      "program": "${workspaceFolder}",
+      "args": [
+        "-moonbug"
+      ],
+      "host": "127.0.0.1",
+      "port": 8888,
+      "project_root_dir": "${workspaceFolder}"
+    },
+    {
+      "name": "moonbug: Attach to LÖVE",
+      "type": "moonbug",
+      "request": "attach",
+      "host": "127.0.0.1",
+      "port": 8888,
+      "project_root_dir": "${workspaceFolder}"
+    }
+  ]
+}
