@@ -64,9 +64,14 @@ local hidden_keys = {
     ["_ENV"] = true,
 }
 
+---@class moonbug.Version
+---@field major integer
+---@field minor integer
+---@field patch integer
+
 ---Moonbug version as major/minor/patch
 ---@param flat? boolean
----@return { major: integer, minor: integer, patch: integer }|integer[] Returns integer array when flat is set
+---@return moonbug.Version|integer[] Returns integer array when flat is set
 function M.version(flat)
     if flat then
         return { version[1], version[2], version[3] }
